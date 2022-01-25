@@ -1,0 +1,28 @@
+<h1>Pokedex</h1>
+
+<div class="container">
+  <form (ngSubmit)="save()" [formGroup]="form" class="form">
+    <label for="name"
+      >Nome
+      <input type="text" name="name" formControlName="name" />
+    </label>
+    <label for="image"
+      >Image
+      <input type="text" name="image" formControlName="image" />
+    </label>
+
+    <button type="submit" [disabled]="form.invalid">Cadastrar</button>
+  </form>
+
+  <span *ngIf="error">{{ error }}</span>
+</div>
+
+<h3>Pokemons cadastrados</h3>
+
+<div class="container">
+  <ul class="cards">
+    <li *ngFor="let pokemon of pokemons">
+      <app-card [name]="pokemon.name" [image]="pokemon.image"></app-card>
+    </li>
+  </ul>
+</div>
