@@ -26,6 +26,11 @@ h1 {
   margin: 15px;
 }
 
+.error {
+  margin-top: 15px;
+  color: red;
+}
+
 ul {
   list-style: none;
 }
