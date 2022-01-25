@@ -16,7 +16,7 @@ export class PokemonComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private pokemonService: PokemonService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.setForm();
@@ -25,6 +25,7 @@ export class PokemonComponent implements OnInit {
 
   setForm(): void {
     this.form = this.formBuilder.group({
+      // comentado para aparecer a validação do backend
       // name: [null, Validators.required],
       // image: [null, Validators.required],
       name: [null, null],
@@ -32,25 +33,27 @@ export class PokemonComponent implements OnInit {
     });
   }
 
-  findAll(): void {
-    this.pokemonService.findAll().subscribe({
-      next: (pokemons) => {
-        this.pokemons = pokemons;
-      },
-      error: (err) => {
-        this.error = err.error.message;
-      },
-    });
+  async findAll(): Promise<void> {
+    try {
+      const pokemons = await this.pokemonService.findAll();
+      this.pokemons = pokemons
+    } catch (e: any) {
+      this.error = e.error.message
+    }
+
   }
 
-  save(): void {
-    this.pokemonService.create(this.form.value).subscribe({
-      next: () => {
-        this.form.reset();
-        this.error = null;
-        this.findAll();
-      },
-      error: (err) => (this.error = err.error.message),
-    });
+  async save(): Promise<void> {
+
+    try {
+      await this.pokemonService.create(this.form.value);
+      this.form.reset();
+      this.error = null;
+      await this.findAll();
+
+    } catch (e: any) {
+      this.error = e.error.message
+    }
+
   }
 }

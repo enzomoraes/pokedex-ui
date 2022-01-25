@@ -11,18 +11,19 @@
       <input type="text" name="image" formControlName="image" />
     </label>
 
-    <button type="submit" [disabled]="form.invalid">Cadastrar</button>
+    <button type="submit" [disabled]="form.invalid">Capturar</button>
   </form>
 
-  <span *ngIf="error">{{ error }}</span>
+  <div *ngIf="error" class="error">{{ error }}</div>
 </div>
 
-<h3>Pokemons cadastrados</h3>
+<h3>Pokemons Capturados</h3>
 
 <div class="container">
   <ul class="cards">
+    <span *ngIf="pokemons.length === 0">Ainda não capturou nenhum pokemon</span>
     <li *ngFor="let pokemon of pokemons">
-      <app-card [name]="pokemon.name" [image]="pokemon.image"></app-card>
+      <app-card [name]="pokemon.name" [image]="pokemon.image" [id]="pokemon.id"></app-card>
     </li>
   </ul>
 </div>
